@@ -1,0 +1,18 @@
+# Secrets — never commit real credentials. Only .env.example is tracked.
+.env
+.csenv
+*.env
+!.env.example
+
+# Orchestrator run directories (inventories, plans, manifests)
+/tmp/orchestrate-*
+orchestrate-*/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+.DS_Store

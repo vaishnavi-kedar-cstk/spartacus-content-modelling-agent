@@ -1,0 +1,31 @@
+{
+  "_comment": "A deep (depth-4) category menu modeled flat — the same nav_node pattern as the footer sample, just more rows. Mapped 1:1 from the SAP powertools CategoryNavigationComponent payload. All nodes share menu_id='powertools-category'. The empty root (PowertoolsCategoryNavNode) is not an entry — it becomes the menu_id, and top-level items use parent_id=''. Leaf nodes that had no title in SAP get their title from the resolved CMSLinkComponent linkName (nav_resolve pass). Replace <..._link_uid> with the uids of your cms_link_component entries. The wrapAfter=10 display hint lives on the category_navigation_component entry, not on a node.",
+  "menu_id": "powertools-category",
+  "component": {
+    "content_type": "category_navigation_component",
+    "title": "Category Navigation Component",
+    "menu_id": "powertools-category",
+    "wrap_after": 10
+  },
+  "nodes": [
+    { "title": "Power Drills",             "menu_id": "powertools-category", "node_id": "PowerDrillsNavNode",             "parent_id": "",                       "sort_order": 1, "links": [ { "uid": "<PowerDrillsCategoryLink_uid>",             "_content_type_uid": "cms_link_component" } ] },
+    { "title": "Angle Grinders",           "menu_id": "powertools-category", "node_id": "AngleGrindersNavNode",           "parent_id": "",                       "sort_order": 2, "links": [ { "uid": "<AngleGrindersCategoryLink_uid>",           "_content_type_uid": "cms_link_component" } ] },
+    { "title": "Screwdrivers",             "menu_id": "powertools-category", "node_id": "ScrewdriversNavNode",             "parent_id": "",                       "sort_order": 3, "links": [ { "uid": "<ScrewdriversCategoryLink_uid>",             "_content_type_uid": "cms_link_component" } ] },
+    { "title": "Sanders",                  "menu_id": "powertools-category", "node_id": "SandersNavNode",                  "parent_id": "",                       "sort_order": 4, "links": [ { "uid": "<SandersCategoryLink_uid>",                  "_content_type_uid": "cms_link_component" } ] },
+    { "title": "Measuring & Layout Tools", "menu_id": "powertools-category", "node_id": "MeasuringLayoutToolsNavNode",     "parent_id": "",                       "sort_order": 5, "links": [ { "uid": "<MeasuringLayoutToolsCategoryLink_uid>",     "_content_type_uid": "cms_link_component" } ] },
+    { "title": "Hand Tools",               "menu_id": "powertools-category", "node_id": "HandToolsNavNode",               "parent_id": "",                       "sort_order": 6, "links": [ { "uid": "<HandToolsCategoryLink_uid>",               "_content_type_uid": "cms_link_component" } ] },
+    { "title": "Safety",                   "menu_id": "powertools-category", "node_id": "SafetyNavNode",                   "parent_id": "",                       "sort_order": 7, "links": [ { "uid": "<SafetyCategoryLink_uid>",                   "_content_type_uid": "cms_link_component" } ] },
+
+    { "title": "Hand Tools",               "menu_id": "powertools-category", "node_id": "HandToolsLinksNavNode",          "parent_id": "HandToolsNavNode",       "sort_order": 1, "links": [] },
+    { "title": "Hand Saws",                "menu_id": "powertools-category", "node_id": "HandSawsCategoryNavNode",         "parent_id": "HandToolsLinksNavNode",  "sort_order": 1, "links": [ { "uid": "<HandSawsCategoryLink_uid>",                "_content_type_uid": "cms_link_component" } ] },
+    { "title": "Jigsaws",                  "menu_id": "powertools-category", "node_id": "JigsawsCategoryNavNode",          "parent_id": "HandToolsLinksNavNode",  "sort_order": 2, "links": [ { "uid": "<JigsawsCategoryLink_uid>",                  "_content_type_uid": "cms_link_component" } ] },
+    { "title": "Nut Drivers",              "menu_id": "powertools-category", "node_id": "NutDriversCategoryNavNode",       "parent_id": "HandToolsLinksNavNode",  "sort_order": 3, "links": [ { "uid": "<NutDriversCategoryLink_uid>",              "_content_type_uid": "cms_link_component" } ] },
+    { "title": "Rotary Hammers",           "menu_id": "powertools-category", "node_id": "RotaryHammersCategoryNavNode",    "parent_id": "HandToolsLinksNavNode",  "sort_order": 4, "links": [ { "uid": "<RotaryHammersCategoryLink_uid>",           "_content_type_uid": "cms_link_component" } ] },
+    { "title": "Stripping Tools",          "menu_id": "powertools-category", "node_id": "StrippingToolsCategoryNavNode",   "parent_id": "HandToolsLinksNavNode",  "sort_order": 5, "links": [ { "uid": "<StrippingToolsCategoryLink_uid>",          "_content_type_uid": "cms_link_component" } ] },
+    { "title": "Punches",                  "menu_id": "powertools-category", "node_id": "PunchesCategoryNavNode",          "parent_id": "HandToolsLinksNavNode",  "sort_order": 6, "links": [ { "uid": "<PunchesCategoryLink_uid>",                  "_content_type_uid": "cms_link_component" } ] },
+
+    { "title": "Footwear",                 "menu_id": "powertools-category", "node_id": "FootwearLinksNavNode",           "parent_id": "SafetyNavNode",          "sort_order": 1, "links": [] },
+    { "title": "Footwear Mens",            "menu_id": "powertools-category", "node_id": "FootwearMensCategoryNavNode",     "parent_id": "FootwearLinksNavNode",   "sort_order": 1, "links": [ { "uid": "<FootwearMensCategoryLink_uid>",            "_content_type_uid": "cms_link_component" } ] },
+    { "title": "Footwear Womens",          "menu_id": "powertools-category", "node_id": "FootwearWomensCategoryNavNode",   "parent_id": "FootwearLinksNavNode",   "sort_order": 2, "links": [ { "uid": "<FootwearWomensCategoryLink_uid>",          "_content_type_uid": "cms_link_component" } ] }
+  ]
+}

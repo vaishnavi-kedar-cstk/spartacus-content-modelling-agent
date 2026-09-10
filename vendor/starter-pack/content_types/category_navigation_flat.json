@@ -1,0 +1,55 @@
+{
+  "title": "Category Navigation (Flat)",
+  "uid": "category_navigation_flat",
+  "description": "Header/category navigation (flat model, SAP CategoryNavigationComponent). all_nodes holds every node of the menu; the connector rebuilds the tree from each node's parent_id in one shallow include chain, whatever the depth.",
+  "schema": [
+    {
+      "display_name": "Title",
+      "uid": "title",
+      "data_type": "text",
+      "mandatory": true,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "_default": true,
+        "instruction": "Internal name."
+      }
+    },
+    {
+      "display_name": "Wrap After",
+      "uid": "wrap_after",
+      "data_type": "number",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "Optional: wrap the menu after N items."
+      }
+    },
+    {
+      "display_name": "All Nodes",
+      "uid": "all_nodes",
+      "data_type": "reference",
+      "reference_to": [
+        "nav_node_flat"
+      ],
+      "mandatory": false,
+      "unique": false,
+      "multiple": true,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "The flat pool of every node in this menu (all levels). The connector builds the tree from each node's parent_id."
+      }
+    }
+  ],
+  "options": {
+    "is_page": false,
+    "singleton": false,
+    "sub_title": [],
+    "title": "title"
+  }
+}

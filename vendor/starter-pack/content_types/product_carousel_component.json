@@ -1,0 +1,38 @@
+{
+  "title": "Product Carousel Component",
+  "uid": "product_carousel_component",
+  "description": "A carousel of products by SKU; live price/stock/media hydrate from SAP OCC. SAP typeCode ProductCarouselComponent.",
+  "schema": [
+    {
+      "display_name": "Title",
+      "uid": "title",
+      "data_type": "text",
+      "mandatory": true,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "_default": true,
+        "instruction": "Heading shown above the carousel."
+      }
+    },
+    {
+      "display_name": "Products",
+      "uid": "products",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": true,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "SAP product codes (SKUs), one per value. Only the code is stored; OCC provides live price/stock/image."
+      }
+    }
+  ],
+  "options": {
+    "is_page": false,
+    "singleton": false,
+    "sub_title": [],
+    "title": "title"
+  }
+}

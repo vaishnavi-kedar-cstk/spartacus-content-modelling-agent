@@ -1,0 +1,98 @@
+{
+  "title": "Simple Responsive Banner Component",
+  "uid": "simple_responsive_banner_component",
+  "description": "A responsive banner with per-breakpoint images and a click-through link. SAP typeCode SimpleResponsiveBannerComponent.",
+  "schema": [
+    {
+      "display_name": "Title",
+      "uid": "title",
+      "data_type": "text",
+      "mandatory": true,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "_default": true,
+        "instruction": "Internal name for this banner."
+      }
+    },
+    {
+      "display_name": "URL Link",
+      "uid": "url_link",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "Click-through destination."
+      }
+    },
+    {
+      "display_name": "Media",
+      "uid": "media",
+      "data_type": "file",
+      "mandatory": false,
+      "multiple": false,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "Fallback image, used for any breakpoint without its own image below."
+      }
+    },
+    {
+      "display_name": "Media Mobile",
+      "uid": "media_mobile",
+      "data_type": "file",
+      "mandatory": false,
+      "multiple": false,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "Image for the mobile breakpoint (optional)."
+      }
+    },
+    {
+      "display_name": "Media Tablet",
+      "uid": "media_tablet",
+      "data_type": "file",
+      "mandatory": false,
+      "multiple": false,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "Image for the tablet breakpoint (optional)."
+      }
+    },
+    {
+      "display_name": "Media Desktop",
+      "uid": "media_desktop",
+      "data_type": "file",
+      "mandatory": false,
+      "multiple": false,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "Image for the desktop breakpoint (optional)."
+      }
+    },
+    {
+      "display_name": "Media Widescreen",
+      "uid": "media_widescreen",
+      "data_type": "file",
+      "mandatory": false,
+      "multiple": false,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "Image for the widescreen breakpoint (optional)."
+      }
+    }
+  ],
+  "options": {
+    "is_page": false,
+    "singleton": false,
+    "sub_title": [],
+    "title": "title"
+  }
+}

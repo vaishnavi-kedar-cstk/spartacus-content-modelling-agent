@@ -1,0 +1,250 @@
+{
+  "meta": {
+    "name": "sap-spartacus-contentstack-mapping-registry",
+    "version": "0.3.0",
+    "status": "draft",
+    "generated_from": ["electronics-spa", "powertools-spa"],
+    "changelog": [
+      "0.3.0 — Navigation activated with the FLAT (adjacency-list) model: recursive navigation/navigation_node replaced by nav_node_flat (parent_id text + sort_order) + category_navigation_flat/footer_navigation_flat (all_nodes pool). Category/FooterNavigationComponent now route to the flat types instead of passthrough. Kills the Delivery API include-depth cap that truncated deep menus; verified end-to-end with the Spartacus connector.",
+      "0.2.1 — Phase 3b live-seed corrections against a real NA stack: rich_text.content is HTML advanced RTE (not JSON RTE); passthrough_component.config is multiline text holding JSON (Contentstack has no generic json field); enum fields carry display_type:dropdown.",
+      "0.2.0 — Phase 2: storefront-extract layout sampling surfaced 5 product/category-page functional typeCodes (BundleCarouselComponent, CMSProductListComponent, CMSTabParagraphContainer, ProductAddToCartComponent, ProductReferencesComponent); all mapped to passthrough_component. Navigation node tree now captured by the extractor but content types remain _active:false (deferred).",
+      "0.1.0 — initial: spine + authored types + passthrough, from content-page crawl of electronics-spa and powertools-spa."
+    ],
+    "occ_source": "https://40.76.109.9:9002/occ/v2",
+    "description": "Authoritative mapping from SAP Commerce CMS component typeCodes to Contentstack content types, plus the fixed structural spine. Consumed by the content-model and cs-seed skills. Extended ~1 entry per new storefront via Gate 1.",
+    "conventions": {
+      "underscore_keys": "Any key prefixed with `_` (e.g. _source, _note, _round_trip) is registry metadata and is stripped by cs-seed before calling the Contentstack Management API.",
+      "upsert_keys": "Idempotent seeding upserts by these unique fields: cms_page.page_label, cms_content_slot.slot_id, every component type.sap_meta.sap_uid.",
+      "ordering": "Contentstack multiple reference and group fields preserve authored order; SAP slot/component order is captured 1:1.",
+      "class": "authored = content managers edit it (full schema). functional = code/commerce-driven, no authored content (passthrough). structural = the page/slot spine."
+    }
+  },
+
+  "global_fields": {
+    "sap_component_base": {
+      "title": "SAP Component Base",
+      "uid": "sap_component_base",
+      "_note": "Included as a global_field in every component content type so uid/name/typeCode/container are captured uniformly. type_code is what the connector reads to decide which OCC component shape to emit on round-trip.",
+      "schema": [
+        { "display_name": "SAP UID", "uid": "sap_uid", "data_type": "text", "mandatory": true, "unique": true, "_source": "component.uid", "_note": "idempotent upsert key" },
+        { "display_name": "Name", "uid": "sap_name", "data_type": "text", "_source": "component.name" },
+        { "display_name": "Type Code", "uid": "type_code", "data_type": "text", "mandatory": true, "_source": "component.typeCode" },
+        { "display_name": "Container", "uid": "container", "data_type": "boolean", "_source": "component.container" }
+      ]
+    }
+  },
+
+  "content_types": {
+    "cms_page": {
+      "_class": "structural",
+      "_layer": "spine",
+      "title": "CMS Page",
+      "uid": "cms_page",
+      "options": { "title": "sap_name", "singleton": false, "is_page": false },
+      "schema": [
+        { "display_name": "Name", "uid": "sap_name", "data_type": "text", "mandatory": true, "field_metadata": { "_default": true }, "_source": "page.name|title" },
+        { "display_name": "Page Label", "uid": "page_label", "data_type": "text", "mandatory": true, "unique": true, "_source": "page.label", "_note": "route label, idempotent upsert key" },
+        { "display_name": "Page ID", "uid": "page_id", "data_type": "text", "_source": "page.uid" },
+        { "display_name": "Template", "uid": "template", "data_type": "text", "_source": "page.template" },
+        { "display_name": "Page Type", "uid": "page_type", "data_type": "text", "display_type": "dropdown", "enum": { "advanced": false, "choices": [ { "value": "ContentPage" }, { "value": "CategoryPage" }, { "value": "ProductPage" }, { "value": "CatalogPage" } ] }, "_source": "page.typeCode" },
+        { "display_name": "Robot Tag", "uid": "robot_tag", "data_type": "text", "display_type": "dropdown", "enum": { "advanced": false, "choices": [ { "value": "INDEX_FOLLOW" }, { "value": "INDEX_NOFOLLOW" }, { "value": "NOINDEX_FOLLOW" }, { "value": "NOINDEX_NOFOLLOW" } ] }, "_source": "page.robotTag" },
+        { "display_name": "Slots", "uid": "slots", "data_type": "group", "multiple": true, "_source": "page.contentSlots.contentSlot[]", "_note": "ordered; binds a template position to a slot entry", "schema": [
+          { "display_name": "Position", "uid": "position", "data_type": "text", "_source": "slot.position" },
+          { "display_name": "Slot", "uid": "slot", "data_type": "reference", "reference_to": [ "cms_content_slot" ], "field_metadata": { "ref_multiple": false }, "_source": "slot.slotId" }
+        ] }
+      ]
+    },
+
+    "cms_content_slot": {
+      "_class": "structural",
+      "_layer": "spine",
+      "title": "CMS Content Slot",
+      "uid": "cms_content_slot",
+      "_note": "Shared/global slots (header, footer, nav) are ordinary entries with shared=true, referenced by many pages. No separate 'global slot' type is needed.",
+      "options": { "title": "slot_id", "singleton": false, "is_page": false },
+      "schema": [
+        { "display_name": "Slot ID", "uid": "slot_id", "data_type": "text", "mandatory": true, "unique": true, "_source": "slot.slotId", "_note": "idempotent upsert key" },
+        { "display_name": "Name", "uid": "sap_name", "data_type": "text", "_source": "slot.name" },
+        { "display_name": "Position", "uid": "position", "data_type": "text", "_source": "slot.position" },
+        { "display_name": "Shared", "uid": "shared", "data_type": "boolean", "_source": "slot.slotShared", "_note": "true => global slot reused across pages" },
+        { "display_name": "Components", "uid": "components", "data_type": "reference", "reference_to": [ "banner", "rich_text", "link", "product_carousel", "merchandising_carousel", "passthrough_component" ], "field_metadata": { "ref_multiple": true }, "_source": "slot.components.component[]", "_note": "ordered list of component entries of any ACTIVE component content type. 'navigation' is deferred to v0.2 and re-added here when activated." }
+      ]
+    },
+
+    "banner": {
+      "_class": "authored",
+      "_layer": "component",
+      "_covers": [ "SimpleResponsiveBannerComponent", "SimpleBannerComponent" ],
+      "title": "Banner",
+      "uid": "banner",
+      "_round_trip": "type_code=SimpleResponsiveBannerComponent -> emit media{mobile,tablet,desktop,widescreen}; type_code=SimpleBannerComponent -> emit single media (desktop asset) + external flag.",
+      "schema": [
+        { "display_name": "SAP Meta", "uid": "sap_meta", "data_type": "global_field", "reference_to": "sap_component_base" },
+        { "display_name": "Media Mobile", "uid": "media_mobile", "data_type": "file", "_source": "media.mobile" },
+        { "display_name": "Media Tablet", "uid": "media_tablet", "data_type": "file", "_source": "media.tablet" },
+        { "display_name": "Media Desktop", "uid": "media_desktop", "data_type": "file", "_source": "media.desktop | media (simple banner single)" },
+        { "display_name": "Media Widescreen", "uid": "media_widescreen", "data_type": "file", "_source": "media.widescreen" },
+        { "display_name": "Alt Text", "uid": "alt_text", "data_type": "text", "_source": "media.*.altText" },
+        { "display_name": "URL Link", "uid": "url_link", "data_type": "text", "_source": "component.urlLink" },
+        { "display_name": "External", "uid": "external", "data_type": "boolean", "_source": "component.external", "_note": "simple banner only" }
+      ]
+    },
+
+    "rich_text": {
+      "_class": "authored",
+      "_layer": "component",
+      "_covers": [ "CMSParagraphComponent" ],
+      "title": "Rich Text",
+      "uid": "rich_text",
+      "_round_trip": "connector emits component.content directly from the HTML RTE value. Round-trip diff normalizes HTML (whitespace, attribute order) before comparing.",
+      "_decision": "RESOLVED (v0.2.1): HTML-based advanced RTE (data_type text + allow_rich_text). Stores OCC HTML directly, so seed/deliver need no HTML<->JSON conversion. Chosen over JSON RTE after the live seed: Contentstack rejects a generic json field here and HTML RTE round-trips losslessly.",
+      "schema": [
+        { "display_name": "SAP Meta", "uid": "sap_meta", "data_type": "global_field", "reference_to": "sap_component_base" },
+        { "display_name": "Content", "uid": "content", "data_type": "text", "field_metadata": { "allow_rich_text": true, "rich_text_type": "advanced", "multiline": false, "version": 3 }, "_source": "component.content", "_note": "HTML advanced RTE; stores OCC HTML verbatim" }
+      ]
+    },
+
+    "link": {
+      "_class": "authored",
+      "_layer": "component",
+      "_covers": [ "CMSLinkComponent" ],
+      "title": "Link",
+      "uid": "link",
+      "_round_trip": "emit linkName, url OR contentPage/contentPageLabelOrId, target, external, styleClasses.",
+      "schema": [
+        { "display_name": "SAP Meta", "uid": "sap_meta", "data_type": "global_field", "reference_to": "sap_component_base" },
+        { "display_name": "Link Name", "uid": "link_name", "data_type": "text", "_source": "component.linkName" },
+        { "display_name": "URL", "uid": "url", "data_type": "text", "_source": "component.url", "_note": "external or internal path" },
+        { "display_name": "Content Page", "uid": "content_page", "data_type": "text", "_source": "component.contentPage", "_note": "optional: links to a page id instead of a raw url" },
+        { "display_name": "Content Page Label", "uid": "content_page_label", "data_type": "text", "_source": "component.contentPageLabelOrId" },
+        { "display_name": "Open In New Tab", "uid": "target_blank", "data_type": "boolean", "_source": "component.target" },
+        { "display_name": "External", "uid": "external", "data_type": "boolean", "_source": "component.external" },
+        { "display_name": "Style Classes", "uid": "style_classes", "data_type": "text", "_source": "component.styleClasses" }
+      ]
+    },
+
+    "product_carousel": {
+      "_class": "authored",
+      "_layer": "component",
+      "_covers": [ "ProductCarouselComponent" ],
+      "title": "Product Carousel",
+      "uid": "product_carousel",
+      "_round_trip": "join product_codes with a single space -> component.productCodes.",
+      "_note": "product_codes reference commerce records that stay in the commerce backend; we only store the codes, not the products.",
+      "schema": [
+        { "display_name": "SAP Meta", "uid": "sap_meta", "data_type": "global_field", "reference_to": "sap_component_base" },
+        { "display_name": "Title", "uid": "title", "data_type": "text", "_source": "component.title" },
+        { "display_name": "Product Codes", "uid": "product_codes", "data_type": "text", "multiple": true, "_source": "component.productCodes (space-split)" },
+        { "display_name": "Scroll", "uid": "scroll", "data_type": "text", "display_type": "dropdown", "enum": { "advanced": false, "choices": [ { "value": "ALLVISIBLE" }, { "value": "SINGLE" }, { "value": "ONE" } ] }, "_source": "component.scroll" },
+        { "display_name": "Popup", "uid": "popup", "data_type": "boolean", "_source": "component.popup" }
+      ]
+    },
+
+    "merchandising_carousel": {
+      "_class": "authored",
+      "_layer": "component",
+      "_covers": [ "MerchandisingCarouselComponent" ],
+      "title": "Merchandising Carousel",
+      "uid": "merchandising_carousel",
+      "_note": "Personalized carousel driven by a merchandising strategy id (SAP CDS). Only seen on electronics-spa. Content managers set title/strategy/display config.",
+      "schema": [
+        { "display_name": "SAP Meta", "uid": "sap_meta", "data_type": "global_field", "reference_to": "sap_component_base" },
+        { "display_name": "Title", "uid": "title", "data_type": "text", "_source": "component.title" },
+        { "display_name": "Strategy", "uid": "strategy", "data_type": "text", "_source": "component.strategy" },
+        { "display_name": "Number To Display", "uid": "number_to_display", "data_type": "number", "_source": "component.numberToDisplay" },
+        { "display_name": "Scroll", "uid": "scroll", "data_type": "text", "_source": "component.scroll" },
+        { "display_name": "Viewport Percentage", "uid": "viewport_percentage", "data_type": "number", "_source": "component.viewportPercentage" }
+      ]
+    },
+
+    "nav_node_flat": {
+      "_class": "authored",
+      "_layer": "component",
+      "_covers": [ "CMSNavigationNode" ],
+      "title": "Nav Node (Flat)",
+      "uid": "nav_node_flat",
+      "_active": true,
+      "_note": "Flat adjacency-list nav node. parent_id is PLAIN TEXT (the parent's node_id, NOT a reference), so the hierarchy costs zero reference-resolution depth; sort_order orders siblings. Every node of a menu lives in one all_nodes pool on the component and the connector rebuilds the tree in code — so menu depth never hits the Delivery API's plan-gated include-depth cap. Replaces the recursive navigation_node.",
+      "schema": [
+        { "display_name": "Title", "uid": "title", "data_type": "text", "mandatory": true, "_source": "navigationNode.title, else resolved link_name for titleless SAP leaf nodes" },
+        { "display_name": "Node ID", "uid": "node_id", "data_type": "text", "mandatory": true, "unique": true, "_source": "navigationNode.uid" },
+        { "display_name": "Parent ID", "uid": "parent_id", "data_type": "text", "_source": "parent navigationNode.uid ('' for top-level items)" },
+        { "display_name": "Sort Order", "uid": "sort_order", "data_type": "number", "_source": "1-based sibling index within children[]" },
+        { "display_name": "Links", "uid": "links", "data_type": "reference", "reference_to": [ "link" ], "field_metadata": { "ref_multiple": true }, "_source": "navigationNode.entries[].itemId" }
+      ]
+    },
+
+    "category_navigation_flat": {
+      "_class": "authored",
+      "_layer": "component",
+      "_covers": [ "CategoryNavigationComponent" ],
+      "title": "Category Navigation (Flat)",
+      "uid": "category_navigation_flat",
+      "_active": true,
+      "_round_trip": "emit wrapAfter + all_nodes (the flat pool of every node in the tree, all levels).",
+      "_note": "Header/category nav, flat model. all_nodes references every nav_node_flat of the menu; the tree is rebuilt from each node's parent_id. One shallow, constant include chain regardless of depth.",
+      "schema": [
+        { "display_name": "SAP Meta", "uid": "sap_meta", "data_type": "global_field", "reference_to": "sap_component_base" },
+        { "display_name": "Wrap After", "uid": "wrap_after", "data_type": "number", "_source": "component.wrapAfter" },
+        { "display_name": "All Nodes", "uid": "all_nodes", "data_type": "reference", "reference_to": [ "nav_node_flat" ], "field_metadata": { "ref_multiple": true }, "_source": "flattened component.navigationNode tree" }
+      ]
+    },
+
+    "footer_navigation_flat": {
+      "_class": "authored",
+      "_layer": "component",
+      "_covers": [ "FooterNavigationComponent" ],
+      "title": "Footer Navigation (Flat)",
+      "uid": "footer_navigation_flat",
+      "_active": true,
+      "_round_trip": "emit wrapAfter + all_nodes (same shape as category_navigation_flat).",
+      "_note": "Footer nav, flat model. Same shape as category_navigation_flat; SAP footer notice/showLanguageCurrency are not carried (the footer renderer does not use them).",
+      "schema": [
+        { "display_name": "SAP Meta", "uid": "sap_meta", "data_type": "global_field", "reference_to": "sap_component_base" },
+        { "display_name": "Wrap After", "uid": "wrap_after", "data_type": "number", "_source": "component.wrapAfter" },
+        { "display_name": "All Nodes", "uid": "all_nodes", "data_type": "reference", "reference_to": [ "nav_node_flat" ], "field_metadata": { "ref_multiple": true }, "_source": "flattened component.navigationNode tree" }
+      ]
+    },
+
+    "passthrough_component": {
+      "_class": "functional",
+      "_layer": "component",
+      "_covers": [ "CMSFlexComponent", "CMSSiteContextComponent", "MiniCartComponent", "SearchBoxComponent", "BreadcrumbComponent", "ProductRefinementComponent", "SearchResultsListComponent", "CartSuggestionComponent", "JspIncludeComponent", "BundleCarouselComponent", "CMSProductListComponent", "CMSTabParagraphContainer", "ProductAddToCartComponent", "ProductReferencesComponent" ],
+      "title": "Passthrough Component",
+      "uid": "passthrough_component",
+      "_note": "Catch-all for code/commerce-driven components with no authored content. Preserves typeCode + all remaining fields verbatim so NOTHING is lost and round-trip is exact. Also the safe landing spot for any brand-new typeCode before it earns a dedicated type via Gate 1.",
+      "_round_trip": "emit type_code + spread config{} back as the component's fields.",
+      "schema": [
+        { "display_name": "SAP Meta", "uid": "sap_meta", "data_type": "global_field", "reference_to": "sap_component_base" },
+        { "display_name": "Flex Type", "uid": "flex_type", "data_type": "text", "_source": "component.flexType", "_note": "CMSFlexComponent only" },
+        { "display_name": "Config", "uid": "config", "data_type": "text", "field_metadata": { "multiline": true }, "_source": "component.{all remaining fields}", "_note": "JSON-encoded verbatim map of every non-base field (CS has no generic json field; also holds the deferred navigationNode tree)" }
+      ]
+    }
+  },
+
+  "typecode_index": {
+    "_note": "Every typeCode observed across the seeded sites, its target CS content type, and its class. New storefronts add rows here via Gate 1.",
+    "SimpleResponsiveBannerComponent": { "cs_type": "banner", "class": "authored", "since": "0.1.0", "seen_on": ["electronics-spa", "powertools-spa"] },
+    "SimpleBannerComponent":           { "cs_type": "banner", "class": "authored", "since": "0.1.0", "seen_on": ["electronics-spa", "powertools-spa"] },
+    "CMSParagraphComponent":           { "cs_type": "rich_text", "class": "authored", "since": "0.1.0", "seen_on": ["electronics-spa", "powertools-spa"] },
+    "CMSLinkComponent":                { "cs_type": "link", "class": "authored", "since": "0.1.0", "seen_on": ["electronics-spa", "powertools-spa"] },
+    "ProductCarouselComponent":        { "cs_type": "product_carousel", "class": "authored", "since": "0.1.0", "seen_on": ["electronics-spa", "powertools-spa"] },
+    "MerchandisingCarouselComponent":  { "cs_type": "merchandising_carousel", "class": "authored", "since": "0.1.0", "seen_on": ["electronics-spa"] },
+    "FooterNavigationComponent":       { "cs_type": "footer_navigation_flat", "class": "authored", "since": "0.1.0", "seen_on": ["electronics-spa", "powertools-spa"], "_note": "flat model: nav tree flattened into nav_node_flat pool (all_nodes)" },
+    "CategoryNavigationComponent":     { "cs_type": "category_navigation_flat", "class": "authored", "since": "0.1.0", "seen_on": ["electronics-spa", "powertools-spa"], "_note": "flat model: nav tree flattened into nav_node_flat pool (all_nodes)" },
+    "CMSFlexComponent":                { "cs_type": "passthrough_component", "class": "functional", "since": "0.1.0", "seen_on": ["electronics-spa", "powertools-spa"] },
+    "CMSSiteContextComponent":         { "cs_type": "passthrough_component", "class": "functional", "since": "0.1.0", "seen_on": ["electronics-spa", "powertools-spa"] },
+    "MiniCartComponent":               { "cs_type": "passthrough_component", "class": "functional", "since": "0.1.0", "seen_on": ["electronics-spa", "powertools-spa"] },
+    "SearchBoxComponent":              { "cs_type": "passthrough_component", "class": "functional", "since": "0.1.0", "seen_on": ["electronics-spa", "powertools-spa"] },
+    "BreadcrumbComponent":             { "cs_type": "passthrough_component", "class": "functional", "since": "0.1.0", "seen_on": ["electronics-spa", "powertools-spa"] },
+    "ProductRefinementComponent":      { "cs_type": "passthrough_component", "class": "functional", "since": "0.1.0", "seen_on": ["electronics-spa", "powertools-spa"] },
+    "SearchResultsListComponent":      { "cs_type": "passthrough_component", "class": "functional", "since": "0.1.0", "seen_on": ["electronics-spa", "powertools-spa"] },
+    "CartSuggestionComponent":         { "cs_type": "passthrough_component", "class": "functional", "since": "0.1.0", "seen_on": ["electronics-spa", "powertools-spa"] },
+    "JspIncludeComponent":             { "cs_type": "passthrough_component", "class": "functional", "since": "0.1.0", "seen_on": ["powertools-spa"] },
+    "BundleCarouselComponent":         { "cs_type": "passthrough_component", "class": "functional", "since": "0.2.0", "seen_on": ["electronics-spa"], "_source": "layout-sample:ProductPage" },
+    "CMSProductListComponent":         { "cs_type": "passthrough_component", "class": "functional", "since": "0.2.0", "seen_on": ["electronics-spa"], "_source": "layout-sample:CategoryPage" },
+    "CMSTabParagraphContainer":        { "cs_type": "passthrough_component", "class": "functional", "since": "0.2.0", "seen_on": ["electronics-spa"], "_source": "layout-sample:ProductPage" },
+    "ProductAddToCartComponent":       { "cs_type": "passthrough_component", "class": "functional", "since": "0.2.0", "seen_on": ["electronics-spa"], "_source": "layout-sample:ProductPage" },
+    "ProductReferencesComponent":      { "cs_type": "passthrough_component", "class": "functional", "since": "0.2.0", "seen_on": ["electronics-spa"], "_source": "layout-sample:ProductPage" }
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "title": "Landing Page",
+  "uid": "landing_page",
+  "description": "CMS page on SAP LandingPage2Template (home / marketing landing).",
+  "schema": [
+    {
+      "display_name": "Title",
+      "uid": "title",
+      "data_type": "text",
+      "mandatory": true,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "_default": true,
+        "instruction": "Page title."
+      }
+    },
+    {
+      "display_name": "URL",
+      "uid": "url",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "Route this page resolves at. Use \"/\" for the homepage."
+      }
+    },
+    {
+      "display_name": "Page Type",
+      "uid": "page_type",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "SAP page type discriminator (e.g. ContentPage / ProductPage / CategoryPage)."
+      }
+    },
+    {
+      "display_name": "Template",
+      "uid": "template",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "SAP page template. Keep \"LandingPage2Template\"."
+      }
+    },
+    {
+      "display_name": "Section 1",
+      "uid": "section1",
+      "data_type": "reference",
+      "reference_to": [
+        "simple_responsive_banner_component",
+        "simple_banner_component",
+        "product_carousel_component",
+        "cms_paragraph_component",
+        "cms_link_component",
+        "cms_flex_component"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Maps to SAP slot Section1. Top hero band. Leave empty to keep SAP's."
+      }
+    },
+    {
+      "display_name": "Section 2",
+      "uid": "section2",
+      "data_type": "reference",
+      "reference_to": [
+        "simple_responsive_banner_component",
+        "simple_banner_component",
+        "product_carousel_component",
+        "cms_paragraph_component",
+        "cms_link_component",
+        "cms_flex_component"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Maps to SAP slot Section2. Leave empty to keep SAP's."
+      }
+    },
+    {
+      "display_name": "Section 2A",
+      "uid": "section2_a",
+      "data_type": "reference",
+      "reference_to": [
+        "simple_responsive_banner_component",
+        "simple_banner_component",
+        "product_carousel_component",
+        "cms_paragraph_component",
+        "cms_link_component",
+        "cms_flex_component"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Maps to SAP slot Section2A. Leave empty to keep SAP's."
+      }
+    },
+    {
+      "display_name": "Section 2B",
+      "uid": "section2_b",
+      "data_type": "reference",
+      "reference_to": [
+        "simple_responsive_banner_component",
+        "simple_banner_component",
+        "product_carousel_component",
+        "cms_paragraph_component",
+        "cms_link_component",
+        "cms_flex_component"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Maps to SAP slot Section2B. Leave empty to keep SAP's."
+      }
+    },
+    {
+      "display_name": "Section 2C",
+      "uid": "section2_c",
+      "data_type": "reference",
+      "reference_to": [
+        "simple_responsive_banner_component",
+        "simple_banner_component",
+        "product_carousel_component",
+        "cms_paragraph_component",
+        "cms_link_component",
+        "cms_flex_component"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Maps to SAP slot Section2C. Leave empty to keep SAP's."
+      }
+    },
+    {
+      "display_name": "Section 3",
+      "uid": "section3",
+      "data_type": "reference",
+      "reference_to": [
+        "simple_responsive_banner_component",
+        "simple_banner_component",
+        "product_carousel_component",
+        "cms_paragraph_component",
+        "cms_link_component",
+        "cms_flex_component"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Maps to SAP slot Section3. Often a product carousel. Leave empty to keep SAP's."
+      }
+    },
+    {
+      "display_name": "Section 4",
+      "uid": "section4",
+      "data_type": "reference",
+      "reference_to": [
+        "simple_responsive_banner_component",
+        "simple_banner_component",
+        "product_carousel_component",
+        "cms_paragraph_component",
+        "cms_link_component",
+        "cms_flex_component"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Maps to SAP slot Section4. Leave empty to keep SAP's."
+      }
+    },
+    {
+      "display_name": "Section 5",
+      "uid": "section5",
+      "data_type": "reference",
+      "reference_to": [
+        "simple_responsive_banner_component",
+        "simple_banner_component",
+        "product_carousel_component",
+        "cms_paragraph_component",
+        "cms_link_component",
+        "cms_flex_component"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Maps to SAP slot Section5. Leave empty to keep SAP's."
+      }
+    }
+  ],
+  "options": {
+    "is_page": false,
+    "singleton": false,
+    "sub_title": [
+      "url"
+    ],
+    "title": "title"
+  }
+}

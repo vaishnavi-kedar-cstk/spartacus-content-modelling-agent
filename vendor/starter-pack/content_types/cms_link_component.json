@@ -1,0 +1,62 @@
+{
+  "title": "CMS Link Component",
+  "uid": "cms_link_component",
+  "description": "A single link (used standalone or as a navigation leaf). SAP typeCode CMSLinkComponent.",
+  "schema": [
+    {
+      "display_name": "Title",
+      "uid": "title",
+      "data_type": "text",
+      "mandatory": true,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "_default": true,
+        "instruction": "Internal name for this link."
+      }
+    },
+    {
+      "display_name": "Link Name",
+      "uid": "link_name",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "Visible link text."
+      }
+    },
+    {
+      "display_name": "URL",
+      "uid": "url",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "Link destination."
+      }
+    },
+    {
+      "display_name": "Target",
+      "uid": "target",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "\"true\" to open in a new tab, else \"false\"."
+      }
+    }
+  ],
+  "options": {
+    "is_page": false,
+    "singleton": false,
+    "sub_title": [],
+    "title": "title"
+  }
+}

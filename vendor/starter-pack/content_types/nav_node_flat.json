@@ -1,0 +1,79 @@
+{
+  "title": "Nav Node (Flat)",
+  "uid": "nav_node_flat",
+  "description": "Flat navigation node. parent_id is plain text (the parent's node_id, not a reference); the component's all_nodes pool holds every node and the connector rebuilds the tree in code, so menu depth never hits the include-depth cap.",
+  "schema": [
+    {
+      "display_name": "Title",
+      "uid": "title",
+      "data_type": "text",
+      "mandatory": true,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "_default": true,
+        "instruction": "Display label shown in the menu (e.g. \"Power Drills\"). For SAP leaf categories that had no title, seed this from the linked link's name."
+      }
+    },
+    {
+      "display_name": "Node Id",
+      "uid": "node_id",
+      "data_type": "text",
+      "mandatory": true,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": true,
+      "field_metadata": {
+        "instruction": "Stable, unique id for THIS node (e.g. the SAP node uid). Children reference it via Parent Id."
+      }
+    },
+    {
+      "display_name": "Parent Id",
+      "uid": "parent_id",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": true,
+      "field_metadata": {
+        "instruction": "Node Id of the parent node. Leave EMPTY for a top-level item. Plain text on purpose (not a reference) so building the tree costs zero reference-resolution depth."
+      }
+    },
+    {
+      "display_name": "Sort Order",
+      "uid": "sort_order",
+      "data_type": "number",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": true,
+      "field_metadata": {
+        "instruction": "Position among siblings (1, 2, 3 ...)."
+      }
+    },
+    {
+      "display_name": "Links",
+      "uid": "links",
+      "data_type": "reference",
+      "reference_to": [
+        "cms_link_component"
+      ],
+      "mandatory": false,
+      "unique": false,
+      "multiple": true,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "The clickable link leaf under this node. The only reference in the model — one hop, always resolves. Heading nodes leave this empty."
+      }
+    }
+  ],
+  "options": {
+    "is_page": false,
+    "singleton": false,
+    "sub_title": [],
+    "title": "title"
+  }
+}

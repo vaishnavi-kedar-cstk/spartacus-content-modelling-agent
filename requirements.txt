@@ -1,0 +1,5 @@
+# The agent runs on the Python 3.9+ standard library alone (urllib, ssl, json).
+# The only optional dependency is jsonschema, used to validate the inventory
+# contract in tests. Everything else — extract, model, seed, publish, verify —
+# needs no third-party packages.
+jsonschema>=4.0    # optional: strict inventory.schema.json validation

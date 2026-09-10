@@ -1,0 +1,38 @@
+{
+  "title": "CMS Flex Component",
+  "uid": "cms_flex_component",
+  "description": "A functional block selected by its flex type (e.g. ProductIntroComponent). SAP typeCode CMSFlexComponent.",
+  "schema": [
+    {
+      "display_name": "Title",
+      "uid": "title",
+      "data_type": "text",
+      "mandatory": true,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "_default": true,
+        "instruction": "Internal name."
+      }
+    },
+    {
+      "display_name": "Flex Type",
+      "uid": "flex_type",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "The SAP flexType that selects the Angular component (e.g. ProductIntroComponent, PageTitleComponent)."
+      }
+    }
+  ],
+  "options": {
+    "is_page": false,
+    "singleton": false,
+    "sub_title": [],
+    "title": "title"
+  }
+}

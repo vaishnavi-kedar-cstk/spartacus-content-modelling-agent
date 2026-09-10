@@ -1,0 +1,91 @@
+{
+  "title": "Nav Node",
+  "uid": "nav_node",
+  "description": "One item in a navigation menu. FLAT model: every node is its own entry and points at its parent by text id (parent_id), never by nested reference. The whole tree is fetched in one flat query and reassembled in code, so menu depth never affects how many reference levels the Delivery API must resolve.",
+  "schema": [
+    {
+      "display_name": "Title",
+      "uid": "title",
+      "data_type": "text",
+      "mandatory": true,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "_default": true,
+        "instruction": "Display label shown in the menu (e.g. \"Company\", \"About Us\"). Localizable."
+      }
+    },
+    {
+      "display_name": "Menu Id",
+      "uid": "menu_id",
+      "data_type": "text",
+      "mandatory": true,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": true,
+      "field_metadata": {
+        "instruction": "Which menu this node belongs to, e.g. \"footer\" or \"main-category\". One flat query filters on this to load exactly one menu."
+      }
+    },
+    {
+      "display_name": "Node Id",
+      "uid": "node_id",
+      "data_type": "text",
+      "mandatory": true,
+      "unique": true,
+      "multiple": false,
+      "non_localizable": true,
+      "field_metadata": {
+        "instruction": "Stable, unique id for THIS node. Children point back to it via Parent Id. Keep it human-readable, e.g. \"footer-company\"."
+      }
+    },
+    {
+      "display_name": "Parent Id",
+      "uid": "parent_id",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": true,
+      "field_metadata": {
+        "instruction": "Node Id of the parent node. LEAVE EMPTY for a top-level item. This is plain text on purpose (not a reference) so building the tree costs zero reference-resolution depth."
+      }
+    },
+    {
+      "display_name": "Sort Order",
+      "uid": "sort_order",
+      "data_type": "number",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": true,
+      "field_metadata": {
+        "instruction": "Position among siblings (1, 2, 3 ...). A flat list has no inherent order, so this restores it."
+      }
+    },
+    {
+      "display_name": "Links",
+      "uid": "links",
+      "data_type": "reference",
+      "reference_to": [
+        "cms_link_component"
+      ],
+      "mandatory": false,
+      "unique": false,
+      "multiple": true,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "The clickable link(s) under this node. This is the ONLY reference in the model, and it is one hop deep, so it always resolves. Heading nodes leave this empty; leaf nodes carry one link."
+      }
+    }
+  ],
+  "options": {
+    "is_page": false,
+    "singleton": false,
+    "sub_title": [],
+    "title": "title"
+  }
+}

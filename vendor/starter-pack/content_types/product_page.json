@@ -1,0 +1,174 @@
+{
+  "title": "Product Page",
+  "uid": "product_page",
+  "description": "CMS overrides for SAP ProductDetailsPageTemplate. One shared entry serves every PDP (product data hydrates from OCC).",
+  "schema": [
+    {
+      "display_name": "Title",
+      "uid": "title",
+      "data_type": "text",
+      "mandatory": true,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "_default": true,
+        "instruction": "Page title."
+      }
+    },
+    {
+      "display_name": "URL",
+      "uid": "url",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "Route this page resolves at. Use \"/\" for the homepage."
+      }
+    },
+    {
+      "display_name": "Page Type",
+      "uid": "page_type",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "SAP page type discriminator (e.g. ContentPage / ProductPage / CategoryPage)."
+      }
+    },
+    {
+      "display_name": "Template",
+      "uid": "template",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "SAP page template. Keep \"ProductDetailsPageTemplate\"."
+      }
+    },
+    {
+      "display_name": "Summary",
+      "uid": "summary",
+      "data_type": "reference",
+      "reference_to": [
+        "simple_responsive_banner_component",
+        "simple_banner_component",
+        "product_carousel_component",
+        "cms_paragraph_component",
+        "cms_link_component",
+        "cms_flex_component"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Maps to SAP slot Summary. Leave empty to keep SAP's."
+      }
+    },
+    {
+      "display_name": "Up Selling",
+      "uid": "up_selling",
+      "data_type": "reference",
+      "reference_to": [
+        "simple_responsive_banner_component",
+        "simple_banner_component",
+        "product_carousel_component",
+        "cms_paragraph_component",
+        "cms_link_component",
+        "cms_flex_component"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Maps to SAP slot UpSelling. Leave empty to keep SAP's."
+      }
+    },
+    {
+      "display_name": "Cross Selling",
+      "uid": "cross_selling",
+      "data_type": "reference",
+      "reference_to": [
+        "simple_responsive_banner_component",
+        "simple_banner_component",
+        "product_carousel_component",
+        "cms_paragraph_component",
+        "cms_link_component",
+        "cms_flex_component"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Maps to SAP slot CrossSelling. Leave empty to keep SAP's."
+      }
+    },
+    {
+      "display_name": "Tabs",
+      "uid": "tabs",
+      "data_type": "reference",
+      "reference_to": [
+        "simple_responsive_banner_component",
+        "simple_banner_component",
+        "product_carousel_component",
+        "cms_paragraph_component",
+        "cms_link_component",
+        "cms_flex_component"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Maps to SAP slot Tabs. Leave empty to keep SAP's."
+      }
+    },
+    {
+      "display_name": "Placeholder Content",
+      "uid": "placeholder_content_slot",
+      "data_type": "reference",
+      "reference_to": [
+        "simple_responsive_banner_component",
+        "simple_banner_component",
+        "product_carousel_component",
+        "cms_paragraph_component",
+        "cms_link_component",
+        "cms_flex_component"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Maps to SAP slot PlaceholderContentSlot. Leave empty to keep SAP's."
+      }
+    }
+  ],
+  "options": {
+    "is_page": false,
+    "singleton": false,
+    "sub_title": [
+      "url"
+    ],
+    "title": "title"
+  }
+}

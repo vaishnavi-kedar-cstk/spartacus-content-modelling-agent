@@ -1,0 +1,72 @@
+{
+  "title": "Nav Node",
+  "uid": "nav_node",
+  "description": "A node in a navigation tree: a heading with children and/or link leaves.",
+  "schema": [
+    {
+      "display_name": "Title",
+      "uid": "title",
+      "data_type": "text",
+      "mandatory": true,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "_default": true,
+        "instruction": "Display label for this node (e.g. \"Digital Cameras\")."
+      }
+    },
+    {
+      "display_name": "Node Id",
+      "uid": "uid_val",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "Stable SAP node id for this navigation node."
+      }
+    },
+    {
+      "display_name": "Children",
+      "uid": "children",
+      "data_type": "reference",
+      "reference_to": [
+        "nav_node"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Child navigation nodes."
+      }
+    },
+    {
+      "display_name": "Entries",
+      "uid": "entries",
+      "data_type": "reference",
+      "reference_to": [
+        "cms_link_component"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Link leaves under this node."
+      }
+    }
+  ],
+  "options": {
+    "is_page": false,
+    "singleton": false,
+    "sub_title": [],
+    "title": "title"
+  }
+}

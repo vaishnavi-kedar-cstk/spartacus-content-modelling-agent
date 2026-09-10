@@ -1,0 +1,54 @@
+{
+  "_comment": "Six flat nav_node entries that build a two-section footer. All share menu_id='footer'. Top-level sections have an empty parent_id; each link item points at its section via parent_id = the section's node_id. Replace the <..._link_entry_uid> placeholders with the uids of your cms_link_component entries.",
+  "menu_id": "footer",
+  "nodes": [
+    {
+      "title": "Company",
+      "menu_id": "footer",
+      "node_id": "footer-company",
+      "parent_id": "",
+      "sort_order": 1,
+      "links": []
+    },
+    {
+      "title": "Help",
+      "menu_id": "footer",
+      "node_id": "footer-help",
+      "parent_id": "",
+      "sort_order": 2,
+      "links": []
+    },
+    {
+      "title": "About Us",
+      "menu_id": "footer",
+      "node_id": "footer-about",
+      "parent_id": "footer-company",
+      "sort_order": 1,
+      "links": [ { "uid": "<about_link_entry_uid>", "_content_type_uid": "cms_link_component" } ]
+    },
+    {
+      "title": "Careers",
+      "menu_id": "footer",
+      "node_id": "footer-careers",
+      "parent_id": "footer-company",
+      "sort_order": 2,
+      "links": [ { "uid": "<careers_link_entry_uid>", "_content_type_uid": "cms_link_component" } ]
+    },
+    {
+      "title": "Contact",
+      "menu_id": "footer",
+      "node_id": "footer-contact",
+      "parent_id": "footer-help",
+      "sort_order": 1,
+      "links": [ { "uid": "<contact_link_entry_uid>", "_content_type_uid": "cms_link_component" } ]
+    },
+    {
+      "title": "Returns",
+      "menu_id": "footer",
+      "node_id": "footer-returns",
+      "parent_id": "footer-help",
+      "sort_order": 2,
+      "links": [ { "uid": "<returns_link_entry_uid>", "_content_type_uid": "cms_link_component" } ]
+    }
+  ]
+}

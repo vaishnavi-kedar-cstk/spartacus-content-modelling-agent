@@ -1,0 +1,50 @@
+{
+  "title": "Simple Banner Component",
+  "uid": "simple_banner_component",
+  "description": "A single-image banner with a click-through link. SAP typeCode SimpleBannerComponent.",
+  "schema": [
+    {
+      "display_name": "Title",
+      "uid": "title",
+      "data_type": "text",
+      "mandatory": true,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "_default": true,
+        "instruction": "Internal name for this banner."
+      }
+    },
+    {
+      "display_name": "URL Link",
+      "uid": "url_link",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "Click-through destination."
+      }
+    },
+    {
+      "display_name": "Media",
+      "uid": "media",
+      "data_type": "file",
+      "mandatory": false,
+      "multiple": false,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "Banner image."
+      }
+    }
+  ],
+  "options": {
+    "is_page": false,
+    "singleton": false,
+    "sub_title": [],
+    "title": "title"
+  }
+}

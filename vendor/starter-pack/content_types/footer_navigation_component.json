@@ -1,0 +1,55 @@
+{
+  "title": "Footer Navigation Component",
+  "uid": "footer_navigation_component",
+  "description": "Footer navigation. SAP typeCode FooterNavigationComponent.",
+  "schema": [
+    {
+      "display_name": "Title",
+      "uid": "title",
+      "data_type": "text",
+      "mandatory": true,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "_default": true,
+        "instruction": "Internal name."
+      }
+    },
+    {
+      "display_name": "Wrap After",
+      "uid": "wrap_after",
+      "data_type": "text",
+      "mandatory": false,
+      "unique": false,
+      "multiple": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "instruction": "Optional: wrap the columns after N items."
+      }
+    },
+    {
+      "display_name": "Navigation Node",
+      "uid": "navigation_node",
+      "data_type": "reference",
+      "reference_to": [
+        "nav_node"
+      ],
+      "mandatory": false,
+      "multiple": true,
+      "unique": false,
+      "non_localizable": false,
+      "field_metadata": {
+        "ref_multiple": true,
+        "ref_multiple_content_types": true,
+        "instruction": "Root of the footer navigation tree."
+      }
+    }
+  ],
+  "options": {
+    "is_page": false,
+    "singleton": false,
+    "sub_title": [],
+    "title": "title"
+  }
+}
